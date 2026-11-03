@@ -3,10 +3,15 @@ import ydf
 from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field, ConfigDict
 
+# Dynamically locate the folder next to main.py
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model_dir")
+
 API_KEY = os.environ.get("API_KEY", "my_default_secret_key")
 MODEL_VERSION = "2026-11-03"
 
-model = ydf.load_model("model_dir")
+# Load using the absolute path
+model = ydf.load_model(MODEL_PATH)
 
 class Features(BaseModel):
     # accept BOTH the original Chinese keys and simple ASCII keys
